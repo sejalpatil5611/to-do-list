@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        body {
+            background-image: url('background3.jpg'); /* Replace 'background.jpg' with the path to your background image */
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.7); /* Transparent white background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #333; /* Dark text color */
+        }
+        #taskList {
+            margin-top: 20px;
+        }
+        .task {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .task input[type="checkbox"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .task span {
+            flex-grow: 1;
+            word-break: break-all;
+            color: #555; /* Medium text color */
+        }
+        .task.completed span {
+            text-decoration: line-through;
+            color: #888; /* Lighter text color for completed tasks */
+        }
+       .delete-btn {
+    background-color: #0074d9; /* Light blue color for delete button */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s; /* Smooth transition effect */
+}
+
+.delete-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+        input[type="text"] {
+            width: calc(100% - 80px); /* Adjust width to fit Add button */
+            padding: 8px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+        button {
+            background-color: #0074d9; /* Blue color for Add button */
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s; /* Smooth transition effect */
+        }
+        button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <div id="taskList">
+            <!-- Tasks will be dynamically added here -->
+        </div>
+        <input type="text" id="taskInput" placeholder="Add a new task..." autocomplete="off">
+        <button onclick="addTask()">Add</button>
+    </div>
+    <script>
+        // Function to add a new task
+        function addTask() {
+            var taskInput = document.getElementById("taskInput");
+            var taskText = taskInput.value.trim();
+            if (taskText !== "") {
+                var taskList = document.getElementById("taskList");
+                var task = document.createElement("div");
+                task.className = "task";
+                var checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.addEventListener("change", function() {
+                    task.classList.toggle("completed", this.checked);
+                });
+                var span = document.createElement("span");
+                span.textContent = taskText;
+                var deleteBtn = document.createElement("button");
+                deleteBtn.textContent = "Delete";
+                deleteBtn.className = "delete-btn";
+                deleteBtn.addEventListener("click", function() {
+                    taskList.removeChild(task);
+                });
+                task.appendChild(checkbox);
+                task.appendChild(span);
+                task.appendChild(deleteBtn);
+                taskList.appendChild(task);
+                taskInput.value = "";
+            }
+        }
+
+        // Event listener for pressing Enter key to add task
+        document.getElementById("taskInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                addTask();
+            }
+        });
+    </script>
+</body>
+</html>
